@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PowerMate - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #001f4d, #004080);
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    .navbar {
+      background-color: #002b66;
+      padding: 15px;
+    }
+    .navbar-brand {
+      color: #ffcc00 !important;
+      font-weight: bold;
+      font-size: 24px;
+    }
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .hero h1 {
+      color: #ffcc00;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    .card {
+      border-radius: 15px;
+      background-color: #003366;
+      color: white;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .booking-box {
+      background: #002b66;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      color: white;
+    }
+    .form-control {
+      border-radius: 10px;
+    }
+    .btn-warning {
+      font-weight: bold;
+      border-radius: 10px;
+    }
+    footer {
+      margin-top: 30px;
+      padding: 20px;
+      text-align: center;
+      background: #001f33;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">⚡ PowerMate</a>
+      <div>
+        <a href="my_bookings.html" class="btn btn-warning btn-sm">📋 My Bookings</a>
+        <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Welcome to PowerMate ⚡</h1>
+    <p>Your trusted partner for all electrical needs</p>
+  </div>
+
+  <!-- Service Categories -->
+  <div class="container my-4">
+    <h3 class="text-center mb-4">🔧 Our Services</h3>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>🔌 Electrical Repair</h5>
+          <p>Fix wiring, sockets & switches.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>💡 Lighting</h5>
+          <p>Install or repair lighting systems.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>🌀 Fan Installation</h5>
+          <p>Ceiling, wall & exhaust fan setup.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 text-center">
+          <h5>⚡ Wiring</h5>
+          <p>New wiring or rewiring solutions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Form -->
+  <div class="container my-5">
+    <div class="booking-box">
+      <h3 class="text-center mb-3">📅 Book an Electrician</h3>
+      <form id="bookingForm">
+        <div class="mb-3">
+          <input type="text" id="issue" class="form-control" placeholder="Describe your issue (e.g., fan not working)" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" id="location" class="form-control" placeholder="Enter your Location" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" id="pincode" class="form-control" placeholder="Enter your Pincode" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" id="time" class="form-control" placeholder="Preferred Time (e.g., Tomorrow 10AM)" required>
+        </div>
+        <button type="submit" class="btn btn-warning w-100">Book Now</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 PowerMate | Need Help? Contact support@powermate.com</p>
+  </footer>
+
+  <script>
+    // Logout
+    function logout() {
+      alert("Logged out successfully!");
+      window.location.href = "login.html";
+    }
+
+    // Handle booking
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let issue = document.getElementById("issue").value.trim();
+      let location = document.getElementById("location").value.trim();
+      let pincode = document.getElementById("pincode").value.trim();
+      let time = document.getElementById("time").value.trim();
+
+      if (issue === "" || location === "" || pincode === "" || time === "") {
+        alert("❌ Please fill in all fields!");
+        return;
+      }
+
+      // Save booking locally (can be connected to backend later)
+      let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+      bookings.push({ issue, location, pincode, time, date: new Date().toLocaleString() });
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+
+      alert("✅ Booking Confirmed! An electrician will contact you soon.");
+      document.getElementById("bookingForm").reset();
+    });
+  </script>
+
+</body>
+</html>
